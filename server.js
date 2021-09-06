@@ -2,8 +2,13 @@ const express = require('express')
 const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
 const app = express()
+const PORT= process.env.PORT || 3000;
 
-mongoose.connect('mongodb://localhost/urlShortener', {
+const DB= process.env.DATABASE_URL.replace('<PASSWORD>',process.env.DATABASE_PASSWORD);
+
+ 
+
+mongoose.connect(DB, {
   useNewUrlParser: true, useUnifiedTopology: true
 })
 
@@ -31,4 +36,6 @@ app.get('/:shortUrl', async (req, res) => {
   res.redirect(shortUrl.full)
 })
 
-app.listen(process.env.PORT || 5000);
+app.listen(PORT, () =>{
+  console.log('Server started');
+});
